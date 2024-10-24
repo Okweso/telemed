@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css"> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Logout and Edit buttons -->
+        <div class="header-actions">
+            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" class="edit-btn">Edit Details</button>
+        </div>
+
+        <h1>Welcome, <span id="name"></span> <span id="name1"></span></h1>
+
+        <!-- Contact Details -->
+        <div class="details-section">
+            <h3>Contact Details</h3>
+            <p><strong>Email:</strong> <span id="email_address"></span></p>
+            <p><strong>Phone Number:</strong> <span id="phone_number"></span></p>
+        </div>
+
+        <!-- Address -->
+        <div class="address-section">
+            <h3>Address</h3>
+            <p><span id="patient_address"></span></p>
+        </div>
+
+        <!-- Book Appointment Button -->
+        <div class="appointment-actions">
+            <button class="book-appointment-btn">Book Appointment</button>
+        </div>
+
+        <!-- Appointments -->
+        <div class="appointments-section">
+            <h3>Appointments</h3>
+            <!-- List of Appointments goes here -->
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

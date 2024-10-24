@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>patient registration</title>
+</head>
+<body>
+    <h1>Welcome to our telemedicine application, please register to use the system</h1>
+    <div>
+        <h2>Patient Registration</h2>
+        <div>
+            <form id="registerForm">
+                <label for="first_name">First Name: </label>
+                <input type="text" id="first_name" name="first_name" placeholder="Enter your first name">
+                <label for="last_name">Last Name: </label>
+                <input type="text" id="last_name" name="last_name" placeholder="Enter your last name">
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" placeholder="Email">
+                <label for="phone">Phone Number: </label>
+                <input type="text" id="phone" name="phone" placeholder="Phone Number">
+                <label for="dob">Date of Birth: </label>
+                <input type="date" id="dob" name="dob">
+                <div class="gender-options">
+                    <label><strong>Gender:</strong></label>
+                    <label>
+                        <input type="radio" name="gender" value="male"> Male
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="female"> Female
+                    </label>
+                </div>
+                <label for="address">Address: </label>
+                <input type="text" id="address" name="address" placeholder="Address">
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" placeholder="Password">
+                <label for="password1">Confirm Password: </label>
+                <input type="password" id="password1" name="password1" placeholder="confirm your pasword">
+                <button type="submit" id="register_btn">Register</button>
+                <p>Already registered? <a href="/patient_login">Login</a></p>
+            </form>
+            
+        </div>
+        <div id="message" style="display: none;"></div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

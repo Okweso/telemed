@@ -1,0 +1,282 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F0F0F0; /* Soft Gray */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #1E90FF; /* Blue */
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF; /* White */
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.gender-options {
+    margin-top: 15px;
+}
+
+.gender-options label {
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #1E90FF; /* Blue */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1C86EE; /* Slightly darker blue */
+}
+
+#message {
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+    color: red;
+    display: none;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    h1, h2 {
+        font-size: 24px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+
+
+h1, h2, h3 {
+    color: #1E90FF; 
+    text-align: center;
+}
+
+
+#form-login {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #1E90FF; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1C86EE; 
+}
+
+
+p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+a {
+    color: #1E90FF; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    #form-login {
+        padding: 15px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+.dashboard-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+
+.header-actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.logout-btn,
+.edit-btn {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #FF6347; 
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #FF4500; 
+}
+
+.edit-btn {
+    background-color: #1E90FF; 
+}
+
+.edit-btn:hover {
+    background-color: #1C86EE; 
+}
+
+
+h1 {
+    text-align: center;
+    color: #1E90FF;
+    font-size: 2.2em;
+    margin-bottom: 40px;
+}
+
+
+h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+
+.details-section,
+.address-section {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+p {
+    font-size: 1.1em;
+}
+
+
+.appointment-actions {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.book-appointment-btn {
+    padding: 12px 30px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #32CD32; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.book-appointment-btn:hover {
+    background-color: #2E8B57; 
+}
+
+
+.appointments-section {
+    margin-top: 30px;
+}
+
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .book-appointment-btn {
+        font-size: 1.1em;
+    }
+}

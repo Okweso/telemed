@@ -1,0 +1,130 @@
+const db = require('../config/db');
+const bcrypt = require('bcryptjs');
+const {validationResult} = require('express-validator');
+
+//function for registering patients
+exports.registerPatient = async (req, res) => {
+    const errors = validationResult(req);
+
+    //check for errors in validation
+    if (!errors.isEmpty()){
+        return res.status(400).json({message: 'please correct input errors', errors: errors.array()});
+
+    }
+
+    //fetching input parameters from the request body
+    const {first_name, last_name, email, password, phone, date_of_birth, selectedGender, address} = req.body;
+    //check if patient exists
+    try {
+        const[patient] = await db.execute('SELECT first_name, last_name, email FROM patients WHERE email = ?', [email]);
+        if (patient.length > 0){
+            return res.status(400).json({message: 'Patient with the email already exist'});
+        }
+        //hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        //insert the record
+        await db.execute('INSERT INTO patients (first_name, last_name, email, password, phone, date_of_birth, gender, address) VALUES(?,?,?,?,?,?,?,?)', [first_name, last_name, email, hashedPassword, phone, date_of_birth, selectedGender, address]);
+        //response
+        return res.status(201).json({message: 'Patient registered successfully'}); 
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'An error occured during registration', error: error.message});
+    }
+}
+
+
+//login function
+exports.patientLogin = async (req, res) =>{
+    try{
+    //fetch request data(email and password)
+    const {email, password} = req.body;
+    //check if patient exists
+    try{
+            const [patient] = await db.execute('SELECT * FROM patients WHERE email = ?', [email]);
+            if (patient.length === 0){
+                return res.status(400).json({message: 'user with such email does not exist in our records'});
+            }
+            //check if passwords match
+            const isMatch = await bcrypt.compare(password, patient[0].password);
+
+            if (!isMatch){
+                return res.status(400).json({message: 'invalid email/password combination'});
+            }
+            //create session
+            req.session.patientId = patient[0].patient_id
+            req.session.first_name = patient[0].first_name
+            req.session.last_name = patient[0].last_name
+            req.session.email = patient[0].email
+            req.session.address = patient[0].address
+            req.session.phone = patient[0].phone
+            req.session.dob = patient[0].date_of_birth
+            req.session.gender = patient[0].selectedGender
+
+            return res.status(200).json({message: 'Login successful'});
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({message: 'An error occured while trying to login', error: error.message});
+        }
+    } catch (error){
+        console.error(error);
+        return res.status(500).json({message: 'An error occured while trying to login', error: error.message})
+    }
+} 
+
+
+// //logout function
+// exports.logoutPatient = (req, res) =>{
+//     req.session.destroy( (error) =>{
+//         if (error){
+//             console.error(error);
+//             return res.status(500).json({message: 'An error occured', error: error.message});
+//         }
+//         return res.status(200).json({message: 'Successfully logged out'});
+
+//     })
+// }
+
+//getting user information for editting
+exports.getPatient = async (req, res) =>{
+    if (!req.session.patientId) {
+        return res.status(401).json({message: 'Unauthorized'})
+    }
+    try{
+        //fetch user
+        const [patient] = await db.execute('SELECT first_name, last_name, email, Password, phone, date_of_birth, gender, address FROM patients where patient_id = ?', [req.session.patientId])
+        if (patient.length === 0){
+            return res.status(400).json({message: 'Patient not found'})
+        }
+        return res.status(200).json({message: 'Patient fetched for editting', patient: patient[0]})
+    }catch (error){
+        console.error(error);
+        return res.status(500).json({message: 'An error occurred while fetching user details', error: error.message})
+    }
+
+}
+
+// //function for editing user details
+// exports.editUser = async (req, res) =>{
+//     const errors = validationResult(req);
+//     //check if there are any errors in validation
+//     if (!errors.isEmpty){
+//         res.status(400).json({message: 'Please correct input errors', errors: errors.array()})
+//     }
+//     //fetch user details from request body
+//     const {first_name, last_name, email, phone, password, date_of_birth, selectedGender, address} = req.body;
+//     //hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     if (!req.session.patientId){
+//         res.status(401).json({message: 'Unauthorized. Please login to continue'});
+//     }
+//     try{
+//         //update patients table
+//         await db.execute('UPDATE patients SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, date_of_birth = ?, selectedGender = ?, address = ?', [first_name, last_name, email, hashedPassword, phone, date_of_birth, selectedGender, address])
+//         return res.status(200).json({message: 'Patient details updated successfully'});
+
+//     }catch (error){
+//         console.error(error);
+//         return res.status(500).json({message: 'An error occured while trying to update the details', error: error.message});
+//     }
+
+// }
