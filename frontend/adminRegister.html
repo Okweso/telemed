@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin register</title>
+</head>
+<body>
+    <h1>Please register here</h1>
+    <form id="admin-register">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username">
+        <label for="role">Role</label>
+        <select id="role">
+            <option value="overall admin">Overall admin</option>
+            <option value="monitor">Monitor</option>
+        </select>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <label for="password1">Confirm Password</label>
+        <input type="password" id="password1" name="password1">
+        <button type="submit">Register</button>
+    </form>
+
+    <script src="js/admin_script.js"></script>
+</body>
+</html>

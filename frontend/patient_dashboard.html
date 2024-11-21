@@ -37,8 +37,77 @@
         <!-- Appointments -->
         <div class="appointments-section">
             <h3>Appointments</h3>
-            <!-- List of Appointments goes here -->
+            <div id="appointments">
+                <table id="appointment-table">
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+
+                </table>
+
+            </div>
         </div>
+    </div>
+
+    <div id="edit-section" style="display: none;">
+        <div id="edit-modal">
+            <h2>Edit Details</h2>
+            <div>
+                <form id="editForm">
+                    <label for="edit_first_name">First Name: </label>
+                    <input type="text" id="edit_first_name" name="edit_first_name" placeholder="Enter your first name">
+                    <label for="edit_last_name">Last Name: </label>
+                    <input type="text" id="edit_last_name" name="edit_last_name" placeholder="Enter your last name">
+                    <label for="edit_email">Email: </label>
+                    <input type="email" id="edit_email" name="edit_email" placeholder="Email">
+                    <label for="edit_phone">Phone Number: </label>
+                    <input type="text" id="edit_phone" name="edit_phone" placeholder="Phone Number">
+                    <label for="edit_dob">Date of Birth: </label>
+                    <input type="date" id="edit_dob" name="edit_dob">
+                    <div class="edit-gender-options">
+                        <label><strong>Gender:</strong></label>
+                        <label>
+                            <input type="radio" name="edit_gender" value="male"> Male
+                        </label>
+                        <label>
+                            <input type="radio" name="edit_gender" value="female"> Female
+                        </label>
+                    </div>
+                    <label for="edit_address">Address: </label>
+                    <input type="text" id="edit_address" name="edit_address" placeholder="Address">
+                    <label for="edit_password">New Password: </label>
+                    <input type="password" id="edit_password" name="edit_password" placeholder="Enter new Password">
+                    <label for="edit_password1">Confirm New Password: </label>
+                    <input type="password" id="edit_password1" name="edit_password1" placeholder="Confirm your new password">
+                    <div class="form-actions">
+                        <button type="submit" id="edit_button">Save</button>
+                        <button type="button" id="cancel_button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div id="edit_message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div id="form-section" class="hidden">
+        <form id="submit_appointment_form">
+            <label for="doctor">Doctor</label>
+            <select id="doctor" name="doctor">
+
+            </select>
+            <label for="date">Date</label>
+            <input type="date" id="date">
+            <label for="time">Time</label>
+            <input type="time" id="time">
+            <div class="form-buttons">
+            <button type="submit" id="appointment_btn">Create</button>
+            <button type="button" id="appointment_cancel">Cancel</button>
+            </div>
+
+        </form>
     </div>
 
     <script src="js/script.js"></script>

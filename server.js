@@ -35,6 +35,9 @@ app.use(session({
 //routes
 
 app.use('/telemedicine/api/patients', require('./routes/patientRoutes'))
+app.use('/telemedicine/api/doctors', require('./routes/doctorRoutes'))
+app.use('/telemedicine/api/appointments', require('./routes/appointmentRoutes'))
+app.use('/telemedicine/api/admins', require('./routes/adminRoutes'))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
@@ -51,6 +54,31 @@ app.get('/patient_login', (req, res) => {
 app.get('/patient_dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'patient_dashboard.html'))
 })
+
+app.get('/doctors_register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'doctor_register.html'))
+})
+
+app.get('/doctor_login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'doctor_login.html'))
+})
+
+app.get('/doctor_dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'doctor_dashboard.html'))
+})
+
+app.get('/admins', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'admin_page.html'))
+})
+
+app.get('/admin_register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'adminRegister.html'))
+})
+
+app.get('/admin_login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'adminLogin.html'))
+})
+
 
 const PORT = process.env.PORT;
 

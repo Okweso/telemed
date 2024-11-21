@@ -1,10 +1,10 @@
 const express = require('express');
-const {registerPatient, logoutPatient, getPatient, editPatient} = require('../controllers/patientControllers');
+const {registerPatient, logoutPatient, getPatient, editPatient, patientAppointments, getPatients} = require('../controllers/patientControllers');
 const {check} = require('express-validator');
 const { patientLogin } = require('../controllers/patientControllers');
 const router = express.Router();
 
-//register user
+//register patient
 router.post(
     '/register',
     [
@@ -26,23 +26,29 @@ router.post('/login', patientLogin);
 //fetch patient details for editing
 router.get('/patient', getPatient);
 
-// //edit patient details
-// router.put(
-//     'patient/edit',
-//     [
-//         check('first_name', 'First name is required').not().isEmpty(),
-//         check('second_name', 'Second name is required').not().isEmpty(),
-//         check('email', 'Please provide a valid email').isEmail(),
-//         check('phone', 'Phone number is required').not().isEmpty(),
-//         check('date_of_birth', 'Date of birth is required').not().isEmpty(),
-//         check('selectedGender', 'Please select your gender').not().isEmpty(),
-//         check('address', 'Address is required').not().isEmpty(),
-//         check('password', 'Password must be at least 6 characters').isLength({min: 6})
-//     ],
-//     editPatient
-// );
+//fetch all patients
+router.get('/patients', getPatients);
 
-// //logout
-// router.get('/logout', logoutPatient);
+// //edit patient details
+router.put(
+    '/patient/edit',
+    [
+        check('first_name', 'First name is required').not().isEmpty(),
+        check('second_name', 'Second name is required').not().isEmpty(),
+        check('email', 'Please provide a valid email').isEmail(),
+        check('phone', 'Phone number is required').not().isEmpty(),
+        check('date_of_birth', 'Date of birth is required').not().isEmpty(),
+        check('selectedGender', 'Please select your gender').not().isEmpty(),
+        check('address', 'Address is required').not().isEmpty(),
+        check('password', 'Password must be at least 6 characters').isLength({min: 6})
+    ],
+    editPatient
+);
+
+//logout
+router.get('/logout', logoutPatient);
+
+//fetch patient appointments
+router.get('/appointment', patientAppointments);
 
 module.exports = router;

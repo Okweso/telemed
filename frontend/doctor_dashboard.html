@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/doc_styles.css">
+    <title>doctor dashboard</title>
+</head>
+<body>
+    
+    <div class="container">
+        <button id="logout">Logout</button>
+        <button id="edit-btn">Edit Details</button>
+        <h2>Welcome <span id="doc_first_name"></span> <span id="doc_last_name"></span></h2>
+        <p><strong>Your schedule</strong></p>
+        <p><span id="doc_schedule"></span></p>
+        <p><strong>Contact Details</strong></p>
+        <p><span id="doc_email"></span></p>
+        <p><span id="doc_phone"></span></p>
+
+        <h3>My Appointments</h3>
+        <div id="doctor-appointments">
+            <table id="appointment-table">
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </table>
+        </div>
+
+        
+        <form id="doc_edit_form">
+            <h3>Edit Details</h3>
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" placeholder="First Name">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Last Name">
+            <label for="specialization">Specialization</label>
+            <input type="text" id="specialization" name="specialization" placeholder="Specialization">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="Phone Number">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password">
+            <label for="password1">Confirm Password</label>
+            <input type="password" id="password1" name="password1">
+            <label for="day_of_week"><strong>Schedule</strong></label>
+            <label>
+                <input type="checkbox" name="day" value="Monday">
+                Monday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Tuesday">
+                Tuesday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Wednesday">
+                Wednesday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Thursday">
+                Thursday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Friday">
+                Friday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Saturday">
+                Saturday
+            </label>
+            <label>
+                <input type="checkbox" name="day" value="Sunday">
+                Sunday
+            </label>
+            <button type="submit" id="doc_register_btn">Save</button>
+            <button type="reset" id="doc_cancel" style="background-color: red;">Cancel</button>
+        </form>
+    </div>
+
+    <script src="js/doc_script.js"></script>
+</body>
+</html>

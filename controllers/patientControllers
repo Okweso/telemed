@@ -42,7 +42,7 @@ exports.patientLogin = async (req, res) =>{
     try{
             const [patient] = await db.execute('SELECT * FROM patients WHERE email = ?', [email]);
             if (patient.length === 0){
-                return res.status(400).json({message: 'user with such email does not exist in our records'});
+                return res.status(400).json({message: 'patient with the email does not exist in our records'});
             }
             //check if passwords match
             const isMatch = await bcrypt.compare(password, patient[0].password);
@@ -72,19 +72,19 @@ exports.patientLogin = async (req, res) =>{
 } 
 
 
-// //logout function
-// exports.logoutPatient = (req, res) =>{
-//     req.session.destroy( (error) =>{
-//         if (error){
-//             console.error(error);
-//             return res.status(500).json({message: 'An error occured', error: error.message});
-//         }
-//         return res.status(200).json({message: 'Successfully logged out'});
+//logout function
+exports.logoutPatient = (req, res) =>{
+    req.session.destroy( (error) =>{
+        if (error){
+            console.error(error);
+            return res.status(500).json({message: 'An error occured', error: error.message});
+        }
+        return res.status(200).json({message: 'Successfully logged out'});
 
-//     })
-// }
+    })
+}
 
-//getting user information for editting
+//getting patient information for editting
 exports.getPatient = async (req, res) =>{
     if (!req.session.patientId) {
         return res.status(401).json({message: 'Unauthorized'})
@@ -93,7 +93,7 @@ exports.getPatient = async (req, res) =>{
         //fetch user
         const [patient] = await db.execute('SELECT first_name, last_name, email, Password, phone, date_of_birth, gender, address FROM patients where patient_id = ?', [req.session.patientId])
         if (patient.length === 0){
-            return res.status(400).json({message: 'Patient not found'})
+            return res.status(400).json({message: 'Patient details not found'})
         }
         return res.status(200).json({message: 'Patient fetched for editting', patient: patient[0]})
     }catch (error){
@@ -103,28 +103,69 @@ exports.getPatient = async (req, res) =>{
 
 }
 
-// //function for editing user details
-// exports.editUser = async (req, res) =>{
-//     const errors = validationResult(req);
-//     //check if there are any errors in validation
-//     if (!errors.isEmpty){
-//         res.status(400).json({message: 'Please correct input errors', errors: errors.array()})
-//     }
-//     //fetch user details from request body
-//     const {first_name, last_name, email, phone, password, date_of_birth, selectedGender, address} = req.body;
-//     //hash password
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     if (!req.session.patientId){
-//         res.status(401).json({message: 'Unauthorized. Please login to continue'});
-//     }
-//     try{
-//         //update patients table
-//         await db.execute('UPDATE patients SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, date_of_birth = ?, selectedGender = ?, address = ?', [first_name, last_name, email, hashedPassword, phone, date_of_birth, selectedGender, address])
-//         return res.status(200).json({message: 'Patient details updated successfully'});
+exports.getPatients = async (req, res) => {
+    try{
+        const [patients] = await db.execute('SELECT * FROM patients');
+        if (patients.length === 0){
+            res.status(400).json({message: 'No patients available'})
+        }
+        res.status(200).json({message: 'Patients fetched successfully', patients: patients})
+    } catch (error){
+        res.status(500).json({message: 'An error occured', error: error.message})
+    }
+}
 
-//     }catch (error){
-//         console.error(error);
-//         return res.status(500).json({message: 'An error occured while trying to update the details', error: error.message});
-//     }
+//fetching appointments
+exports.patientAppointments = async (req, res) =>{
+    if (!req.session.patientId){
+        return res.status(400).json({message: "Unauthorized"})
+    }
+    try{
+        const [appointments] = await db.execute("SELECT * FROM appointments WHERE patient_id = ?", [req.session.patientId]);
+        if (appointments.length === 0){
+            res.status(400).json({message: "No appointments"})
+        }
+        res.status(200).json({message: "Appointments fetched successfully", appointments:appointments})
+    } catch (error){
+        res.status(500).json({message: "An error occured", error: error.message})
+    }
+}
 
-// }
+//function for editing patient details
+exports.editPatient = async (req, res) =>{
+    const errors = validationResult(req);
+    //check if there are any errors in validation
+    if (!errors.isEmpty){
+        res.status(400).json({message: 'Please correct input errors', errors: errors.array()})
+    }
+    //fetch user details from request body
+    const {first_name, last_name, email, phone, password, date_of_birth, selectedGender, address} = req.body;
+    //hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    if (!req.session.patientId){
+        res.status(401).json({message: 'Unauthorized. Please login to continue'});
+    }
+    try{
+        const [patient] = await db.execute('SELECT email FROM patients WHERE patient_id = ?', [req.session.patientId]);
+        // Only attempt to update the email if it has changed
+        if (patient[0].email === email) {
+            // Exclude email from the update if it hasn't changed
+            await db.execute(
+                'UPDATE patients SET first_name = ?, last_name = ?, phone = ?, password = ?, date_of_birth = ?, gender = ?, address = ? WHERE patient_id = ?',
+                [first_name, last_name, phone, hashedPassword, date_of_birth, selectedGender, address, req.session.patientId]
+            );
+        } else {
+            // Include email in the update if it has changed
+            await db.execute(
+                'UPDATE patients SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, date_of_birth = ?, gender = ?, address = ? WHERE patient_id = ?',
+                [first_name, last_name, email, phone, hashedPassword, date_of_birth, selectedGender, address, req.session.patientId]
+            );
+        }
+        return res.status(200).json({message: 'Patient details updated successfully'});
+
+    }catch (error){
+        console.error(error);
+        return res.status(500).json({message: 'An error occured while trying to update the details', error: error.message});
+    }
+
+}
